@@ -16,7 +16,8 @@ class SettingTest(unittest.TestCase):
         self.assertRaises(TypeError, Setting, '', '', '', from_cli=5)
 
     def test_path(self):
-        self.uut = Setting('key', ' 22\n', '.' + os.path.sep, True)
+        self.uut = Setting(
+            'key', ' 22\n', '.' + os.path.sep, strip_whitespaces=True)
         self.assertEqual(path(self.uut),
                          os.path.abspath(os.path.join('.', '22')))
 
@@ -90,7 +91,7 @@ class SettingTest(unittest.TestCase):
             typed_ordered_dict(int, str, '')(self.uut)
 
     def test_inherited_conversions(self):
-        self.uut = Setting('key', ' 22\n', '.', True)
+        self.uut = Setting('key', ' 22\n', '.', strip_whitespaces=True)
         self.assertEqual(str(self.uut), '22')
         self.assertEqual(int(self.uut), 22)
         self.assertRaises(ValueError, bool, self.uut)
