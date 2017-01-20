@@ -95,3 +95,12 @@ class SettingTest(unittest.TestCase):
         self.assertEqual(str(self.uut), '22')
         self.assertEqual(int(self.uut), 22)
         self.assertRaises(ValueError, bool, self.uut)
+
+    def test_value_getter(self):
+        with self.assertRaises(ValueError):
+            self.uut = Setting('key', '22\n', '.', to_append=True)
+            self.uut.value
+
+        with self.assertRaises(ValueError):
+            self.uut = Setting('key', '1, 2, 3', '.', to_append=True)
+            list(self.uut)
